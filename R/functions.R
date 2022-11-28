@@ -25,7 +25,7 @@ freqTable <- function(werte){
   tabelle$relfreq <- round(x/length(werte)*100,2)
   tabelle$relcum  <- cumsum(round(x/length(werte)*100,2))
   colnames(tabelle) <- c("Wert", "Haeufig", "Hkum", "Relativ", "Rkum")
-  tabelle$Wert <- as.numeric(as.vector(tabelle$Wert))
+  #tabelle$Wert <- as.numeric(as.vector(tabelle$Wert))
   return(tabelle)
 }
 #---------------------------------------------------------------
@@ -227,5 +227,26 @@ ztrans <- function(x, mu=0, sd=1){
   return(z)
 }
 
-
-
+#' get longitude and altitude from an address
+#' using OpenStreetMap's API at
+#' http://nominatim.openstreetmap.org
+#' @param address a character of an address
+#' @return a data.frame containig "address", "lon", "lat"
+#' @examples
+#' lon.lat.osm("Ernst-Kuzorra-Platz, Gelsenkirchen")
+#'
+#' @export
+lon.lat.osm <- function(address = NULL)
+{
+  if(suppressWarnings(is.null(address)))
+    return(data.frame())
+  tryCatch(
+    d <- jsonlite::fromJSON(
+      gsub('\\@addr\\@', gsub('\\s+', '\\%20', address),
+           'https://nominatim.openstreetmap.org/search/@addr@?format=json&addressdetails=0&limit=1')
+    ), error = function(c) return(data.frame())
+  )
+  if(length(d) == 0) return(data.frame())
+  return(data.frame(lon = as.numeric(d$lon), lat = as.numeric(d$lat)))
+}
+#---------------------------------------------------------------

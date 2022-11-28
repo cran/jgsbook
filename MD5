@@ -1,8 +1,8 @@
-204dbd3666891bb0985053022a19c066 *DESCRIPTION
-d781ff9ae319743c13aaf3ef77b8c289 *NAMESPACE
-2ce44bf3fd29d614c57123460cb6e6d4 *NEWS.md
+f7c52d785526322d33f45b791a8d4986 *DESCRIPTION
+5164fb82656ff817fcec34b65dd90439 *NAMESPACE
+e5d59866734c4a44fbd88ea748860ed5 *NEWS.md
 318658b7aa4ec2e93bb84147b1e0dbe1 *R/datasets.R
-15a29169e492c6b188e5bd359719f85d *R/functions.R
+90924e1f94ec56b9f8c7acc7f5348239 *R/functions.R
 d88c230035fe3e2cb8b5a88a2f3f54a1 *README.md
 b0450b0b26c0c5f4a79e4520c6070149 *data/Nachtwachen.rda
 c84a3e0dbe34ab11818230f80f2cd1af *data/OrdinalSample.rda
@@ -21,6 +21,7 @@ a2e1b7229705f004c349a73fb52d75b8 *man/Pflegeberufe.Rd
 5e71c2f9ef22ef38f6f8c55140ba7ffc *man/epa.Rd
 7a74c70c0704e554463ab463c5951234 *man/freqTable.Rd
 1d35a39d9dcba886f0eb79e704bafcd2 *man/kenngroessen.Rd
+f837524957dc1e502d6de61143b34c4e *man/lon.lat.osm.Rd
 44b929f0ce53a7cfda66203ce9ae13b7 *man/mma.Rd
 640f9496a0429361bce66f1d7e7b6508 *man/nw.Rd
 81f44a8a92a485ff0dee98626d4f4e6a *man/pf8.Rd
