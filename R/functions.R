@@ -82,9 +82,12 @@ kenngroessen <- function(werte){
 #---------------------------------------------------------------
 KIbinomail_a <- function(p, n, alpha){
   fehler <- qnorm(1-alpha/2)*sqrt(p*(1-p)/n)
-  cat(1-alpha, "KI untere Grenze: ", p - fehler, "\n")
-  cat(1-alpha, "KI  obere Grenze: ", p + fehler, "\n")
-  cat(1-alpha, "KI        Laenge: ", 2*fehler)
+  x <- c(paste(1-alpha, "KI untere Grenze"),
+         paste(1-alpha, "KI obere Grenze"),
+         paste(1-alpha, "KI Laenge"))
+  y <- c(p-fehler, p+fehler, 2*fehler)
+  KI <- data.frame(x,y)
+  return(KI)
 }
 #---------------------------------------------------------------
 
@@ -111,12 +114,15 @@ KIbinomail_a <- function(p, n, alpha){
 #---------------------------------------------------------------
 KIbinomial_u <- function(p1, n1, p2, n2, alpha){
   d <- p2-p1
-  cat("Differenz der Anteile: ", d, "\n")
   fehler <- qnorm(1-alpha/2)*sqrt(p1*(1-p1)/n1 + p2*(1-p2)/n2)
-  cat(1-alpha, "KI untere Grenze: ", d - fehler, "\n")
-  cat(1-alpha, "KI  obere Grenze: ", d + fehler, "\n")
-  cat(1-alpha, "KI        Laenge: ", 2*fehler)
-}
+  x <- c("Differenz der Anteile",
+         paste(1-alpha, "KI untere Grenze"),
+         paste(1-alpha, "KI obere Grenze"),
+         paste(1-alpha, "KI Laenge"))
+  y <- c(d, d-fehler, d+fehler, 2*fehler)
+  KI <- data.frame(x,y)
+  return(KI)
+  }
 #---------------------------------------------------------------
 
 
@@ -140,9 +146,12 @@ KIbinomial_u <- function(p1, n1, p2, n2, alpha){
 #---------------------------------------------------------------
 KInormal_a <- function(xquer, s, n, alpha){
   fehler <- qt(1-alpha/2, df=n-1)*s/sqrt(n)
-  cat(1-alpha, "KI untere Grenze: ", xquer - fehler, "\n")
-  cat(1-alpha, "KI  obere Grenze: ", xquer + fehler, "\n")
-  cat(1-alpha, "KI        Laenge: ", 2*fehler)
+  x <- c(paste(1-alpha, "KI untere Grenze"),
+         paste(1-alpha, "KI obere Grenze"),
+         paste(1-alpha, "KI Laenge"))
+  y <- c(xquer-fehler, xquer+fehler, 2*fehler)
+  KI <- data.frame(x,y)
+  return(KI)
 }
 #---------------------------------------------------------------
 
@@ -150,7 +159,7 @@ KInormal_a <- function(xquer, s, n, alpha){
 
 #' compute confidence intervall  for mean of normal distributed data
 #'
-#' returns borders and length of confidence intervall for mean of normal distributed data
+#' returns a data.frame with borders and length of confidence intervall for mean of normal distributed data
 #' @param x1 mean of obeserved data in group 1
 #'
 #' @param s1 standard deviation of observed data in group 1
@@ -165,7 +174,7 @@ KInormal_a <- function(xquer, s, n, alpha){
 #'
 #' @param alpha error niveau
 #'
-#' @return confidence intervall
+#' @return data.frame of confidence intervall
 #'
 #' @examples
 #' KInormal_u(2.22, 0.255, 13, 2.7, 0.306, 10 , 0.05)
@@ -174,12 +183,15 @@ KInormal_a <- function(xquer, s, n, alpha){
 #---------------------------------------------------------------
 KInormal_u <- function(x1, s1, n1, x2, s2, n2, alpha){
   d <- x2-x1
-  cat("Differenz der Mittelwerte: ", d, "\n")
   s_pool = ((n1-1)*s1^2 + (n2-1)*s2^2) / (n1+n2-2)
   fehler <- qt(1-alpha/2,df=n1+n2-1)*sqrt(s_pool^2/n1 + s_pool^2/n2)
-  cat(1-alpha, "KI untere Grenze: ", d - fehler, "\n")
-  cat(1-alpha, "KI  obere Grenze: ", d + fehler, "\n")
-  cat(1-alpha, "KI        Laenge: ", 2*fehler)
+  x <- c("Differenz der Mittelwerte",
+         paste(1-alpha, "KI untere Grenze"),
+         paste(1-alpha, "KI obere Grenze"),
+         paste(1-alpha, "KI Laenge"))
+  y <- c(d, d-fehler, d+fehler, 2*fehler)
+  KI <- data.frame(x,y)
+  return(KI)
 }
 #---------------------------------------------------------------
 
@@ -233,19 +245,36 @@ ztrans <- function(x, mu=0, sd=1){
 #' @param address a character of an address
 #' @return a data.frame containig "address", "lon", "lat"
 #' @examples
-#' lon.lat.osm("Ernst-Kuzorra-Platz, Gelsenkirchen")
+#' lon.lat.osm("Eiffeltower")
 #'
 #' @export
 lon.lat.osm <- function(address = NULL)
 {
   if(suppressWarnings(is.null(address)))
     return(data.frame())
+
+  if (curl::has_internet() == FALSE) {
+    message("No internet connection")
+    return(NULL)
+  }
+  if (tryCatch(curl::nslookup("nominatim.openstreetmap.org"), error = function(e) return(FALSE))==FALSE) {
+    message("Couldn't resolve host name.")
+    return(NULL)
+  }
+  if (httr::http_error(
+    gsub('\\@addr\\@', gsub('\\s+', '\\%20', address),
+         'https://nominatim.openstreetmap.org/search/@addr@?format=json&addressdetails=0&limit=1')
+  )==TRUE) {
+    message("got HTTP error.")
+    return(NULL)
+  }
   tryCatch(
     d <- jsonlite::fromJSON(
       gsub('\\@addr\\@', gsub('\\s+', '\\%20', address),
            'https://nominatim.openstreetmap.org/search/@addr@?format=json&addressdetails=0&limit=1')
     ), error = function(c) return(data.frame())
   )
+
   if(length(d) == 0) return(data.frame())
   return(data.frame(lon = as.numeric(d$lon), lat = as.numeric(d$lat)))
 }

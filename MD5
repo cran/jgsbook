@@ -1,9 +1,10 @@
-f7c52d785526322d33f45b791a8d4986 *DESCRIPTION
+4afc386b2ba106fcf01e26998889a1f7 *DESCRIPTION
 5164fb82656ff817fcec34b65dd90439 *NAMESPACE
-e5d59866734c4a44fbd88ea748860ed5 *NEWS.md
-318658b7aa4ec2e93bb84147b1e0dbe1 *R/datasets.R
-90924e1f94ec56b9f8c7acc7f5348239 *R/functions.R
+c15652cee3679c3e5042ef8ec4d8c7b8 *NEWS.md
+8e11dd02b0253d7e047782b1a2a58816 *R/datasets.R
+7d303d5482a1d9e1cb15622647422b75 *R/functions.R
 d88c230035fe3e2cb8b5a88a2f3f54a1 *README.md
+37819ec38758ca20bab68b455ca3e045 *data/Faktorenbogen.rda
 b0450b0b26c0c5f4a79e4520c6070149 *data/Nachtwachen.rda
 c84a3e0dbe34ab11818230f80f2cd1af *data/OrdinalSample.rda
 6f937a246acab3b61f84bd58e4efcb10 *data/Pflegeberufe.rda
@@ -11,6 +12,7 @@ c84a3e0dbe34ab11818230f80f2cd1af *data/OrdinalSample.rda
 6307093f817d2b1f6ac476d8267515bc *data/mma.rda
 c8fb6d4abfa2dd5d2a4b1cf4931fd0a9 *data/nw.rda
 38621e35a16996220013afa8d522ceec *data/pf8.rda
+3473c99b9763ebf747cf0ac3b71e547f *man/Faktorenbogen.Rd
 c4903ae6ca3b165c4d8431d81015bd68 *man/KIbinomail_a.Rd
 d4073332ba14b98c9c3cffede10c3307 *man/KIbinomial_u.Rd
 6f349b3401b84f5139787dc4ffce5c91 *man/KInormal_a.Rd

@@ -2,20 +2,20 @@ Package: jgsbook
 Type: Package
 Title: Package of the German Book "Statistik mit R und RStudio" by
         Joerg grosse Schlarmann
-Author: Joerg grosse Schlarmann (aka Produnis)
-Maintainer: Joerg grosse Schlarmann <schlarmann@produnis.de>
-Description: All datasets and functions used in the german book "Statistik mit R und RStudio" by Joerg grosse Schlarmann.
-    You can read it online at <https://www.produnis.de/R/> .
-Version: 1.0.1
-Date: 2022-11-25
+Authors@R: person(given="Jörg", family="große Schlarmann", role=c("aut", "cre"), email="schlarmann@produnis.de")
+Description: All datasets and functions used in the german book "Statistik mit R und RStudio" by grosse Schlarmann (2022) <https://www.produnis.de/R/>.
+Version: 1.0.2
+Date: 2022-12-11
 Language: de-de
 License: GPL (>= 2)
 Depends: R (>= 3.5.0)
 Encoding: UTF-8
-Imports: statip, jsonlite
+Imports: statip, jsonlite, httr, curl
 LazyData: true
-RoxygenNote: 7.2.0
+RoxygenNote: 7.2.2
 NeedsCompilation: no
-Packaged: 2022-11-28 09:44:27 UTC; produnis
+Packaged: 2022-12-12 14:55:04 UTC; produnis
+Author: Jörg große Schlarmann [aut, cre]
+Maintainer: Jörg große Schlarmann <schlarmann@produnis.de>
 Repository: CRAN
-Date/Publication: 2022-11-28 10:00:02 UTC
+Date/Publication: 2022-12-13 12:50:05 UTC
