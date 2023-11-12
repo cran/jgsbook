@@ -22,10 +22,10 @@ KInormal_u(x1, s1, n1, x2, s2, n2, alpha)
 \item{alpha}{error niveau}
 }
 \value{
-confidence intervall
+data.frame of confidence intervall
 }
 \description{
-returns borders and length of confidence intervall for mean of normal distributed data
+returns a data.frame with borders and length of confidence intervall for mean of normal distributed data
 }
 \examples{
 KInormal_u(2.22, 0.255, 13, 2.7, 0.306, 10 , 0.05)

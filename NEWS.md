@@ -1,6 +1,14 @@
+# jgsbook v1.0.4
+
+* fixed a typo in `KIbinomial_a()` (was `KIbinomail_a()`).
+
+# jgsbook v1.0.3
+
+* added data sets `MarioANOVA` and `Messwiederholung` for ANOVA and Friedman analysis.
+
 # jgsbook v1.0.2
 
-* added data package `Faktorenbogen` for factor analysis
+* added data set `Faktorenbogen` for factor analysis
 * removed all "`cat()`" from functions to let user controll output
 * fixed "could not resolve host name" in `lon.lat.osm()`
 

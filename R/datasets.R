@@ -5,6 +5,51 @@
 ####################################################
 
 
+#' Datatable of the Messwiederholung Example for ANOVA
+#'
+#' @details Variables in the dataset:
+#' \itemize{
+#'   \item Name. The first name of the probands.
+#'   \item t1. Measure at time 1
+#'   \item t2. Measure at time 2
+#'   \item t3. Measure at time 3
+#' }
+#'
+#' @title Datatable of the Messwiederholung Example for ANOVA
+#' @docType data
+#' @keywords datasets
+#' @name Messwiederholung
+#' @usage data(Messwiederholung)
+#' @format A data frame with 200 observations in 4 variables
+#' @source \url{https://www.produnis.de/R/}
+NULL
+
+
+#' Datatable of the SuperMario Example for Friedman-ANOVA
+#'
+#' @details Variables in the dataset:
+#' \itemize{
+#'   \item Name. The characters' name
+#'   \item Alter. The characters' age in years
+#'   \item Kingdom. The characters' home
+#'   \item Geschlecht. The characters' gender (männlich = male, weiblich = female)
+#'   \item BadGuy. Whether the character is a bad guy, logical
+#'   \item t1. Measure at time 1
+#'   \item t2. Measure at time 2
+#'   \item t3. Measure at time 3
+#' }
+#'
+#' @title Datatable of the SuperMario Example for Friedman-ANOVA
+#' @docType data
+#' @keywords datasets
+#' @name MarioANOVA
+#' @usage data(MarioANOVA)
+#' @format A data frame with 47 observations in 8 variables
+#' @source \url{https://www.produnis.de/R/}
+NULL
+
+
+
 #' Datatable of the Faktorenbogen Example for factor analysis
 #'
 #' @details Variables in the dataset:

@@ -20,6 +20,6 @@ using OpenStreetMap's API at
 http://nominatim.openstreetmap.org
 }
 \examples{
-lon.lat.osm("Ernst-Kuzorra-Platz, Gelsenkirchen")
+lon.lat.osm("Eiffeltower")
 
 }

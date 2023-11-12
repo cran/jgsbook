@@ -76,11 +76,11 @@ kenngroessen <- function(werte){
 #' @return confidence intervall
 #'
 #' @examples
-#' KIbinomail_a(0.35, 150, 0.05)
+#' KIbinomial_a(0.35, 150, 0.05)
 #'
 #' @export
 #---------------------------------------------------------------
-KIbinomail_a <- function(p, n, alpha){
+KIbinomial_a <- function(p, n, alpha){
   fehler <- qnorm(1-alpha/2)*sqrt(p*(1-p)/n)
   x <- c(paste(1-alpha, "KI untere Grenze"),
          paste(1-alpha, "KI obere Grenze"),
