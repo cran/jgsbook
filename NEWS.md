@@ -1,3 +1,7 @@
+# jgsbook v1.0.5
+
+* added `pairwise.chisq.test()`
+
 # jgsbook v1.0.4
 
 * fixed a typo in `KIbinomial_a()` (was `KIbinomail_a()`).

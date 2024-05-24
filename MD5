@@ -1,8 +1,8 @@
-6cde491372c714f7b330338ca7ce9a74 *DESCRIPTION
-33cae121c714a23185b2aaa277b98af0 *NAMESPACE
-275684cadfd61c09849bf9e075a7fe09 *NEWS.md
+d000edc6e30ce9625aab41a2f3c26f86 *DESCRIPTION
+5475045e31af9455d6aa1d9d2e0c28a9 *NAMESPACE
+2e567678196f6adc65d616f3f577cb69 *NEWS.md
 989cebfc6c5ed690383b1abd81249f24 *R/datasets.R
-25e10693c02828e9f09438128ff99326 *R/functions.R
+0fcf9a3fa0cb72408c64652eb1cfa7f9 *R/functions.R
 d88c230035fe3e2cb8b5a88a2f3f54a1 *README.md
 37819ec38758ca20bab68b455ca3e045 *data/Faktorenbogen.rda
 d25cdb3550f62ceeca0efdab3ba4016d *data/MarioANOVA.rda
@@ -30,6 +30,7 @@ a2e1b7229705f004c349a73fb52d75b8 *man/Pflegeberufe.Rd
 f48ae8513e2a0d5216f0ed7de80b3381 *man/lon.lat.osm.Rd
 44b929f0ce53a7cfda66203ce9ae13b7 *man/mma.Rd
 640f9496a0429361bce66f1d7e7b6508 *man/nw.Rd
+b2d4dae8e566f73f8616260a3ba6efd9 *man/pairwise.chisq.test.Rd
 81f44a8a92a485ff0dee98626d4f4e6a *man/pf8.Rd
 7aa901723e1ed76aa913cffcb358b564 *man/sens.spec.Rd
 00f43fedea541bf9cd59f2247e90a6d6 *man/ztrans.Rd

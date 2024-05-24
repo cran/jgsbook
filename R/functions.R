@@ -279,3 +279,74 @@ lon.lat.osm <- function(address = NULL)
   return(data.frame(lon = as.numeric(d$lon), lat = as.numeric(d$lat)))
 }
 #---------------------------------------------------------------
+
+
+#' Pairwise Chi-Square Tests
+#'
+#' This function performs pairwise Chi-Square tests for two factors.
+#'
+#' @param A A factor with two levels. The first variable.
+#' @param B A factor with two or more levels. The second variable.
+#' @param p.adjust.method A string specifying the method for adjusting p-values. Default is "bonferroni".
+#' @return A data frame with the results of the pairwise Chi-Square tests. Includes the groups, Chi-Square statistic, degrees of freedom, p-values, adjusted p-values, and significance stars.
+#' @importFrom stats chisq.test p.adjust
+#' @importFrom utils combn
+#' @details This function creates all possible pairs of levels of factor B and performs a Chi-Square test for each pair of B on variable A. The p-values are adjusted according to the specified method.
+#' #' This function is created for educational purposes only. For exact p-values, consider using \code{reporttools::pairwise.fisher.test()}.
+#' @examples
+#' set.seed(123)
+#' A <- factor(sample(c("Male", "Female"), 100, replace = TRUE))
+#' B <- factor(sample(c("Location1", "Location2", "Location3"), 100, replace = TRUE))
+#' pairwise.chisq.test(A, B, "holm")
+#' @export
+pairwise.chisq.test <- function(A, B, p.adjust.method="bonferroni"){
+
+  if (!is.factor(A) | !is.factor(B)) {
+    stop("Both objects need to be factors.")
+  }
+
+  # make a data frame
+  df <- data.frame(A=A, B=B)
+
+  # create all combinations
+  kombi <- combn(levels(B), 2)
+
+  # set up a dummy data frame
+  result <- data.frame(group1 = "A",
+                       group2 = "B",
+                       xsquare = "9",
+                       df = "9999",
+                       pvalue = "9",
+                       padjust = "9",
+                       adjust = p.adjust.method,
+                       sig = "")
+
+  # go for each pair
+  for (i in 1:(length(kombi)/2)) {
+    help <- rbind(df[df$B==kombi[,i][1],],
+                  df[df$B==kombi[,i][2],])
+    pups <- chisq.test(help$A, help$B)
+    sig = ""
+    if(p.adjust(as.numeric(pups$p.value), method = p.adjust.method, n=(length(kombi)/2)) < 0.055) {sig="."}
+    if(p.adjust(as.numeric(pups$p.value), method = p.adjust.method, n=(length(kombi)/2)) < 0.05)  {sig="*"}
+    if(p.adjust(as.numeric(pups$p.value), method = p.adjust.method, n=(length(kombi)/2)) < 0.01)  {sig="**"}
+    if(p.adjust(as.numeric(pups$p.value), method = p.adjust.method, n=(length(kombi)/2)) < 0.001) {sig="***"}
+    loop <- data.frame(group1 = kombi[,i][1],
+                       group2 = kombi[,i][2],
+                       xsquare = as.numeric(pups$statistic),
+                       df = as.numeric(pups$parameter),
+                       pvalue = as.numeric(pups$p.value),
+                       padjust = p.adjust(as.numeric(pups$p.value), method = p.adjust.method, n=(length(kombi)/2)),
+                       adjust = p.adjust.method,
+                       sig = sig
+    )
+    result <- rbind(result, loop)
+  }
+  # delete dummy entry
+  result <- result[-1,]
+  # fix row numbers
+  row.names(result) <- NULL
+  # return results
+  return(result)
+}
+#----------------------------------------------------------------------#
