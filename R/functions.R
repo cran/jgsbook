@@ -285,7 +285,7 @@ lon.lat.osm <- function(address = NULL)
 #'
 #' This function performs pairwise Chi-Square tests for two factors.
 #'
-#' @param A A factor with two levels. The first variable.
+#' @param A A factor with two or moew levels. The first variable.
 #' @param B A factor with two or more levels. The second variable.
 #' @param p.adjust.method A string specifying the method for adjusting p-values. Default is "bonferroni".
 #' @return A data frame with the results of the pairwise Chi-Square tests. Includes the groups, Chi-Square statistic, degrees of freedom, p-values, adjusted p-values, and significance stars.
@@ -350,3 +350,105 @@ pairwise.chisq.test <- function(A, B, p.adjust.method="bonferroni"){
   return(result)
 }
 #----------------------------------------------------------------------#
+
+
+
+
+#' Compare Linear Models
+#'
+#' This function fits and compares several models (linear, quadratic, cubic, exponential, logarithmic, sigmoidal, power, logistic) to a given set of dependent and independent variables. It returns either a summary of the models with their R-squared values or predicted values based on the models.
+#'
+#' @param dep A numeric vector representing the dependent variable.
+#' @param ind A numeric vector representing the independent variable.
+#' @param predict Logical. If TRUE, the function returns predicted values for each model. Defaults to FALSE.
+#' @param steps Numeric. The step size for generating x-values for predictions. Only used if predict is TRUE. Defaults to 0.01.
+#'
+#' @return A data frame. If predict is FALSE, returns a data frame with the R-squared values for each model. If predict is TRUE, returns a data frame with the original data and predicted values for each model.
+#' @importFrom stats lm nls
+#' @examples
+#' x <- c(6, 9, 12, 14, 30, 35, 40, 47, 51, 55, 60)
+#' y <- c(14, 28, 50, 70, 89, 94, 90, 75, 59, 44, 27)
+#' compare.lm(y, x)
+#' compare.lm(y, x, predict=TRUE)
+#'
+#' @export
+compare.lm <- function(dep, ind, predict=FALSE, steps=0.01){
+
+  # lineares Modell
+  lin <- lm(dep ~ ind)
+
+  # quadratisches Modell
+  q <- lm(dep ~ ind + I(ind^2))
+
+  # kubisches Modell
+  c <- lm(dep ~ ind + I(ind^2) + I(ind^3))
+
+  # exponentielles Modell
+  e <- lm(log(dep) ~ ind)
+
+  # logarithmisches Modell
+  l <- lm(dep ~ log(ind))
+
+  # sigmoidales Modell
+  s <- lm(log(dep) ~ I(1/ind))
+
+  # potenz Modell
+  p <- lm(log(dep) ~ log(ind))
+
+  ## logistische Funktion
+  logit <- nls(dep ~ SSlogis(ind, Asym, xmid, scal), start = list(Asym = max(dep), xmid = mean(ind), scal = 1))
+
+  result <- data.frame(Modell = c("linear", "quadratisch", "kubisch", "exponentiell",
+                                  "logarithmisch", "sigmoidal", "potenz"), #"logistisch"),
+                       R.square = c(summary(lin)$r.squared,
+                                    summary(q)$r.squared,
+                                    summary(c)$r.squared,
+                                    summary(e)$r.squared,
+                                    summary(l)$r.squared,
+                                    summary(s)$r.squared,
+                                    summary(p)$r.squared))#,
+                                    #summary(logit)$r.squared))
+  if(predict==TRUE){
+    # x-Werte
+    pred.x <- seq(min(ind), max(ind), steps)
+
+    # linear
+    pred.lin <- predict(lin, list(ind=pred.x))
+
+    # quadratisch
+    pred.q <- predict(q, list(ind=pred.x))
+
+    # kubisch
+    pred.c <- predict(c, list(ind=pred.x))
+
+    # exponentiell
+    pred.e <- exp(predict(e, list(ind=pred.x)))
+
+    # logarithmisch
+    pred.l <- predict(l, list(ind=pred.x))
+
+    # sigmoidal
+    pred.s <- predict(s, list(ind=pred.x))
+    pred.s[-1] <- exp(pred.s[-1])
+
+    # potenz
+    pred.p <- exp(predict(p, list(ind=pred.x)))
+
+    # logistisch
+    pred.logit <- predict(logit, list(ind=pred.x))
+
+    # ergebnisse zurückgeben
+    return(data.frame(x = ind, y=dep,
+                      pred.x = pred.x,
+                      line = pred.lin,
+                      quad = pred.q,
+                      cube = pred.c,
+                      expo = pred.e,
+                      loga = pred.l,
+                      sigm = pred.s,
+                      power = pred.p,
+                      logistic = pred.logit))
+  } else {
+    return(result[order(result$R.square, decreasing = TRUE),])
+  }
+}

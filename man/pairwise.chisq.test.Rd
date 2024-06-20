@@ -7,7 +7,7 @@
 pairwise.chisq.test(A, B, p.adjust.method = "bonferroni")
 }
 \arguments{
-\item{A}{A factor with two levels. The first variable.}
+\item{A}{A factor with two or moew levels. The first variable.}
 
 \item{B}{A factor with two or more levels. The second variable.}
 

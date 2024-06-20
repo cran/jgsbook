@@ -1,3 +1,8 @@
+# jgsbook v1.0.6
+
+* added `compare.lm()`
+
+
 # jgsbook v1.0.5
 
 * added `pairwise.chisq.test()`
