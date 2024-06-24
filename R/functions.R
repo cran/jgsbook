@@ -438,7 +438,7 @@ compare.lm <- function(dep, ind, predict=FALSE, steps=0.01){
     pred.logit <- predict(logit, list(ind=pred.x))
 
     # ergebnisse zurückgeben
-    return(data.frame(x = ind, y=dep,
+    return(data.frame(#x = ind, y=dep,
                       pred.x = pred.x,
                       line = pred.lin,
                       quad = pred.q,

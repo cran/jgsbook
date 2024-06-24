@@ -1,3 +1,7 @@
+# jgsbook v1.0.7
+
+* fixed a bug in `compare.lm()` when "`predict=TRUE`".
+
 # jgsbook v1.0.6
 
 * added `compare.lm()`
