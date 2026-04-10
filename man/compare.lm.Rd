@@ -19,7 +19,7 @@ compare.lm(dep, ind, predict = FALSE, steps = 0.01)
 A data frame. If predict is FALSE, returns a data frame with the R-squared values for each model. If predict is TRUE, returns a data frame with the original data and predicted values for each model.
 }
 \description{
-This function fits and compares several models (linear, quadratic, cubic, exponential, logarithmic, sigmoidal, power, logistic) to a given set of dependent and independent variables. It returns either a summary of the models with their R-squared values or predicted values based on the models.
+This function fits and compares several models (linear, quadratic, cubic, exponential, logarithmic, sigmoidal, power) to a given set of dependent and independent variables. It returns either a summary of the models with their R-squared values or predicted values based on the models.
 }
 \examples{
 x <- c(6, 9, 12, 14, 30, 35, 40, 47, 51, 55, 60)

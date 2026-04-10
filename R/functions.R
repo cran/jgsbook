@@ -356,7 +356,7 @@ pairwise.chisq.test <- function(A, B, p.adjust.method="bonferroni"){
 
 #' Compare Linear Models
 #'
-#' This function fits and compares several models (linear, quadratic, cubic, exponential, logarithmic, sigmoidal, power, logistic) to a given set of dependent and independent variables. It returns either a summary of the models with their R-squared values or predicted values based on the models.
+#' This function fits and compares several models (linear, quadratic, cubic, exponential, logarithmic, sigmoidal, power) to a given set of dependent and independent variables. It returns either a summary of the models with their R-squared values or predicted values based on the models.
 #'
 #' @param dep A numeric vector representing the dependent variable.
 #' @param ind A numeric vector representing the independent variable.
@@ -373,6 +373,16 @@ pairwise.chisq.test <- function(A, B, p.adjust.method="bonferroni"){
 #'
 #' @export
 compare.lm <- function(dep, ind, predict=FALSE, steps=0.01){
+
+  if(length(dep[dep==0])>0){
+    return("Exit: Please remove all 0 from dependent variable.")
+  }
+  if(length(ind[ind==0])>0){
+    return("Exit: Please remove all 0 from independent variable")
+  }
+  # Nullen entfernen
+  dep[dep==0] <- 0.000001
+  ind[ind==0] <- 0.000001
 
   # lineares Modell
   lin <- lm(dep ~ ind)
@@ -395,9 +405,6 @@ compare.lm <- function(dep, ind, predict=FALSE, steps=0.01){
   # potenz Modell
   p <- lm(log(dep) ~ log(ind))
 
-  ## logistische Funktion
-  logit <- nls(dep ~ SSlogis(ind, Asym, xmid, scal), start = list(Asym = max(dep), xmid = mean(ind), scal = 1))
-
   result <- data.frame(Modell = c("linear", "quadratisch", "kubisch", "exponentiell",
                                   "logarithmisch", "sigmoidal", "potenz"), #"logistisch"),
                        R.square = c(summary(lin)$r.squared,
@@ -407,7 +414,9 @@ compare.lm <- function(dep, ind, predict=FALSE, steps=0.01){
                                     summary(l)$r.squared,
                                     summary(s)$r.squared,
                                     summary(p)$r.squared))#,
-                                    #summary(logit)$r.squared))
+  result <- result[order(result$R.square, decreasing = TRUE),]
+  rownames(result) <- 1:length(result$Modell)
+  #summary(logit)$r.squared))
   if(predict==TRUE){
     # x-Werte
     pred.x <- seq(min(ind), max(ind), steps)
@@ -434,21 +443,18 @@ compare.lm <- function(dep, ind, predict=FALSE, steps=0.01){
     # potenz
     pred.p <- exp(predict(p, list(ind=pred.x)))
 
-    # logistisch
-    pred.logit <- predict(logit, list(ind=pred.x))
+    vorhersage <- data.frame(pred.x,
+                             line = pred.lin,
+                             quad = pred.q,
+                             cube = pred.c,
+                             expo = pred.e,
+                             loga = pred.l,
+                             sigm = pred.s,
+                             power = pred.p)
 
     # ergebnisse zurückgeben
-    return(data.frame(#x = ind, y=dep,
-                      pred.x = pred.x,
-                      line = pred.lin,
-                      quad = pred.q,
-                      cube = pred.c,
-                      expo = pred.e,
-                      loga = pred.l,
-                      sigm = pred.s,
-                      power = pred.p,
-                      logistic = pred.logit))
+    return(vorhersage)
   } else {
-    return(result[order(result$R.square, decreasing = TRUE),])
+    return(result)
   }
 }

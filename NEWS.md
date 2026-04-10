@@ -1,3 +1,7 @@
+# jgsbook v1.0.8
+
+* fixed language to `en` as requested by Nu HTML checker
+
 # jgsbook v1.0.7
 
 * fixed a bug in `compare.lm()` when "`predict=TRUE`".
